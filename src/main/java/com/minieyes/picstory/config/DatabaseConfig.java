@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+
+
 @Configuration
 @MapperScan(basePackages="com.minieyes.picstory.*")  // interface 파일 package 경로
 public class DatabaseConfig {

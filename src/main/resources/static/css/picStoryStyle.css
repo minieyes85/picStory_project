@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+#wrap {
+	height: 100vh;
+	background-color: #EDEDED;
+}
+
+#boxSignIn {
+	width: 300px;
+	height: 330px;
+}
+
+#boxSignInInput{
+	width: 250px;
+}
+
+#boxAskSignUp {
+	font-size: 12px;
+}
+
+#boxSignUp {
+	width: 300px;
+	height: 500px;
+}
+
+#boxSignUpInput{
+	width: 250px;
+}
+
+#boxAskSignIn {
+	font-size: 12px;
+}
