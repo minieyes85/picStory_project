@@ -34,23 +34,38 @@
 			<div class="d-flex flex-column justify-content-center">
 				<div class="text-center h1 mt-3 mb-3">PicStory</div>
 				<div class="d-flex flex-column" id="boxSignUpInput">
-					<input class="form-control mb-3" type="text" placeholder="ID" id="loginId">
+
+					<div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="ID" id="loginId">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button" id="dupChkBtn">중복검사</button>
+						</div>
+					</div>
+					
+					<div id="chkResult" class="mb-3"></div>
+					
 					<input class="form-control mb-3" type="password"
 						placeholder="Password" id="password">
+					
 					<input class="form-control mb-3"
 						type="password" placeholder="Password check" id="passwordCheck">
+					
 					<input class="form-control mb-3"
 						type="text" placeholder="User Name" id="userName">
+					
 					<input class="form-control mb-3"
 						type="text" placeholder="E-mail address" id="email">
+					
 					<div class="d-flex justify-content-center mb-3">
-						<input class="btn btn-primary" type="button" value="회원가입" id="signUpBtn">
+						<input class="btn btn-secondary" type="button" value="회원가입" id="signUpBtn" disabled>
 					</div>
+					
 				</div>
 
 				<div class="border-top mb-3"></div>
 
-				<div id="boxAskSignIn" class="text-center">
+				<div id="boxAskSign" class="text-center">
 					<span class="mr-3">이미 가입하셨나요?</span> <a href="/user/signin_view">로그인</a>
 				</div>
 			</div>
@@ -60,6 +75,46 @@
 
 <script>
 	$(document).ready(function(){
+		
+		$("#loginId").on("input",function(){
+			$("#signUpBtn").attr("disabled",true);
+			$("#signUpBtn").attr("class","btn btn-secondary");
+			$("#chkResult").text("");
+		});
+		
+		$("#dupChkBtn").on("click",function(){
+			var loginId = $("#loginId").val();
+			
+			if(loginId == ""){
+				alert("아이디를 입력하세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"get",
+				url:"/user/is_duplicated_id",
+				data:{
+					"loginId":loginId
+				},
+				success:function(data){
+					if(data.is_duplicated == "false"){
+						$("#chkResult").text("사용가능한 아이디 입니다.");
+						$("#chkResult").attr("class","mb-3 text-primary");						
+						$("#signUpBtn").attr("class","btn btn-primary");
+						$("#signUpBtn").attr("disabled",false);
+					} else if(data.is_duplicated == "true") {
+						$("#chkResult").text("이미 사용중인 아이디 입니다.");
+						$("#chkResult").attr("class","mb-3 text-danger");
+					}
+				},
+				error:function(){
+					alert("error");
+				}
+			});
+			
+		});
+		
+		
 		$("#signUpBtn").on("click",function(){
 			
 			var loginId = $("#loginId").val();

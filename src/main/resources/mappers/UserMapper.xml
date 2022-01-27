@@ -41,4 +41,30 @@
 			AND `password` = #{password}	
 	</select>
 	
+	<update id="updateUser" parameterType="map">
+			UPDATE `user`
+		SET
+			`password` = #{password}
+			, `name` = #{userName}
+			, `email` = #{email}
+		WHERE
+			`id` = #{userId}
+	</update>
+	
+	<select id="selectLoginId" parameterType="map"
+		resultType="com.minieyes.picstory.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`loginId` = #{loginId}	
+	</select>
+	
 </mapper>

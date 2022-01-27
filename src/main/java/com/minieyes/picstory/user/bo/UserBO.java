@@ -26,4 +26,15 @@ public class UserBO {
 		
 		return userDAO.selectUser(loginId, encPassword);
 	}
+	
+	public int modifyUser(int userId, String password, String userName, String email) {
+		
+		String encPassword = EncryptUtils.md5(password);
+		
+		return userDAO.updateUser(userId, encPassword, userName, email);	
+	}
+	
+	public User checkExistLoginId(String loginId) {
+		return userDAO.selectLoginId(loginId);
+	}
 }

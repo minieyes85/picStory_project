@@ -27,8 +27,11 @@
 </head>
 <body>
 
-${userName}
-
+이름 : <a href="/user/update_view">${userName}</a> <br>
+이메일 : ${userEmail} <br>
+<input type="button" value="로그아웃" id="signOutBtn"
+	onclick="location.href='/user/signOut'"/>
 
 </body>
+
 </html>

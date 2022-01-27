@@ -45,7 +45,7 @@
 				
 				<div class="border-top mb-3"></div>
 				
-				<div id="boxAskSignUp" class="text-center">
+				<div id="boxAskSign" class="text-center">
 					<span class="mr-3">계정이 없으신가요?</span> <a href="/user/signup_view">회원가입</a>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 				success:function(data){
 					if(data.result == "success"){
 						alert(data.userName + "님 환영합니다.");
-						location.href = "/user/test"
+						location.href = "/user/test_view"
 					} else {
 						alert("일치하는 회원이 없습니다.");
 					}
