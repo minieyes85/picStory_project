@@ -84,7 +84,7 @@
 				success:function(data){
 					if(data.result == "success"){
 						alert(data.userName + "님 환영합니다.");
-						location.href = "/user/test_view"
+						location.href = "/post/timeline_view"
 					} else {
 						alert("일치하는 회원이 없습니다.");
 					}

@@ -39,3 +39,45 @@
 #boxUpdateInput {
 	width: 250px;
 }
+
+header > #userName {
+	font-size: 23px;
+	font-weight: bold;
+}
+
+section {
+	min-height: 84vh;
+	background-color: #EDEDED;
+}
+
+.post {
+	margin-top: 7px;
+	margin-bottom : 3px;
+	background-color: white;
+	width: 500px;
+	min-height: 100px; 
+}
+
+.post > .postHeader > .postOwner {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.post > .postImg > img {
+	max-width: 480px;
+	max-height: 500px;
+}
+
+.post > .postComment > .postCommentInput > .postCommentInputForm {
+	width: 85%;
+	margin-right: 10px;
+}
+.post > .postComment > .postCommentInput > button {
+	width: 70px;
+}
+
+footer {
+	position: sticky;
+	top: 100vh;
+	font-size: 15px;
+}
