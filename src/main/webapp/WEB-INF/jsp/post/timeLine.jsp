@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -35,89 +36,69 @@
 			
 			<div>
 			
-			<div class="post border">
-				<div class="postHeader d-flex justify-content-between">
-					<div class="postOwner mt-2 ml-3">
-						최준선
-					</div>
-					
-					<div class="postDate mt-2 mr-3">
-						2022-02-08
-					</div>
-				</div>
-				
-				<!-- 이미지 이미지 유무에 따라 표시 if -->
-				<div class="postImg mt-2 d-flex justify-content-center">
-					<img src="https://cdn.pixabay.com/photo/2020/08/13/15/50/mountains-5485678_960_720.jpg" />
-				</div>
-				
-				<div class="postLike mt-2 ml-2">
-					<img src="/static/images/heart_empty.png"/>
-					<span class="ml-1">좋아요</span>
-				</div>
-				
-				<div class="postContent m-2">
-					posting content blah blah...
-				</div>
-				
-				<!-- 댓글 -->
-				
-				<div class="postComment m-2">
-					<hr>
-					
-					<!-- 댓글 리스트 -->
-					<div class="mb-1">최준선 : 11111111</div>
-					<div class="mb-1">최준선 : 222222222</div>
-					<div class="mb-1">최준선 : 3333333333</div>
-					
-					<!-- 댓글 작성 -->
-					<div class="postCommentInput d-flex">
-						<div class="postCommentInputForm">
-							<input type="text" class="form-control mr-3" />						
+			<div>
+				<c:forEach var="post" items="${Posts}">
+					<div class="post border">
+						<div class="postHeader d-flex justify-content-between">
+							<div class="postOwner mt-2 ml-3">
+								${post.userName }
+							</div>
+							
+							<div class="postDate mt-2 mr-3 d-flex">
+								<fmt:formatDate value="${post.createdAt}" pattern="yy-MM-dd HH:mm"/>
+								<!-- 글삭제 버튼 -->
+								<c:if test="${userId eq post.userId}">
+									<a href="/post/delete?id=${post.id}" class="ml-1">
+										<img src="/static/images/delBtn.png" class="postDelBtn">
+									</a>
+								</c:if>
+							</div>
 						</div>
-						<button class="btn btn-sm btn-primary">작성</button>
-					</div>
-				</div>				
-			</div>
-			
-			
-			<div class="post border">
-				<div class="postHeader d-flex justify-content-between">
-					<div class="postOwner mt-2 ml-3">
-						최준선
-					</div>
-					
-					<div class="postDate mt-2 mr-3">
-						2022-02-08
-					</div>
-				</div>
-				
-				<!-- 이미지 이미지 유무에 따라 표시 if -->
-				
-				<div class="postLike mt-2 ml-2">
-					<img src="/static/images/heart_empty.png"/>
-					<span class="ml-1">좋아요</span>
-				</div>
-				
-				<div class="postContent m-2">
-					posting content blah blah...
-				</div>
-				
-				<!-- 댓글 -->
-				
-				<div class="postComment m-2">
-					<hr>
-					
-					<!-- 댓글 리스트 -->		
-					<!-- 댓글 작성 -->
-					<div class="postCommentInput d-flex">
-						<div class="postCommentInputForm">
-							<input type="text" class="form-control mr-3" />						
+						
+						<!-- 이미지 이미지 유무에 따라 표시 if -->
+						<c:choose>
+							<c:when test="${post.imagePath eq null}"></c:when>
+							<c:when test="${post.imagePath ne null}">
+								<div class="postImg mt-2 d-flex justify-content-center">
+									<img src="${post.imagePath}" />
+								</div>
+							</c:when>
+						</c:choose>
+						<!-- 좋아요 기능 추후 구현
+						<div class="postLike mt-2 ml-2">
+							<img src="/static/images/heart_empty.png"/>
+							<span class="ml-1">좋아요</span>
 						</div>
-						<button class="btn btn-sm btn-primary">작성</button>
+						
+						 -->
+						 
+						<!-- 내용 -->
+						<div class="postContent m-2">
+							${post.content }
+						</div>					
+						
+						<!-- 댓글 -->
+						
+						<div class="postComment m-2">
+							<hr>
+							
+							<!-- 댓글 리스트 추후 구현
+							<div class="mb-1">최준선 : 11111111</div>
+							<div class="mb-1">최준선 : 222222222</div>
+							<div class="mb-1">최준선 : 3333333333</div>
+							-->
+							
+							<!-- 댓글 작성 -->
+							<div class="postCommentInput d-flex">
+								<div class="postCommentInputForm">
+									<input type="text" class="form-control mr-3" />						
+								</div>
+								<button class="btn btn-sm btn-primary" value="${post.id}">작성</button>
+							</div>
+						</div>				
 					</div>
-				</div>				
-			</div>
+				</c:forEach>
+			</div>			
 			
 			</div>
 			

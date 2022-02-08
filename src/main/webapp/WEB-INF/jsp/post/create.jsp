@@ -31,51 +31,34 @@
 		
 		<c:import url="/WEB-INF/jsp/include/header.jsp"></c:import>
 		
-		<section class="d-flex justify-content-center align-items-start">
+		<section class="d-flex justify-content-center align-items-center">
 						
 			<div class="post border">
-				<div class="postHeader d-flex justify-content-between">
-					<div class="postOwner mt-2 ml-3">
-						최준선
-					</div>
-					
-					<div class="postDate mt-2 mr-3">
-						2022-02-08
-					</div>
+				<div class="postHeader d-flex justify-content-between mt-2 ml-3">
+					포스트 작성
 				</div>
 				
-				<!-- 이미지 이미지 유무에 따라 표시 if -->
-				<div class="postImg mt-2 d-flex justify-content-center">
-					<img src="https://cdn.pixabay.com/photo/2020/08/13/15/50/mountains-5485678_960_720.jpg" />
+				<!-- 포스트 내용 -->
+				
+				<div class="postContent mt-2 d-flex justify-content-center">
+					<textarea class="form-control ml-3 mr-3" rows="15" autofocus id="postContentInput"></textarea>
+				</div>
+								
+				<!-- 첨부 사진 파일 -->
+				
+				<div class="postImg mt-2 ml-3">
+					<input type="file" id="fileInput">									
 				</div>
 				
-				<div class="postLike mt-2 ml-2">
-					<img src="/static/images/heart_empty.png"/>
-					<span class="ml-1">좋아요</span>
+				<!-- 포스트 취소/등록 -->
+				
+				<div class="d-flex justify-content-between ml-3 mr-3 mt-2 mb-3">
+					<button class="btn btn-danger"
+						onclick="location.href='/post/timeline_view'">취소</button>
+					<button class="btn btn-primary" id="postCreateBtn">등록</button>
 				</div>
 				
-				<div class="postContent m-2">
-					posting content blah blah...
-				</div>
-				
-				<!-- 댓글 -->
-				
-				<div class="postComment m-2">
-					<hr>
-					
-					<!-- 댓글 리스트 -->
-					<div class="mb-1">최준선 : 11111111</div>
-					<div class="mb-1">최준선 : 222222222</div>
-					<div class="mb-1">최준선 : 3333333333</div>
-					
-					<!-- 댓글 작성 -->
-					<div class="postCommentInput d-flex">
-						<div class="postCommentInputForm">
-							<input type="text" class="form-control mr-3" />						
-						</div>
-						<button class="btn btn-sm btn-primary">작성</button>
-					</div>
-				</div>				
+								
 			</div>
 						
 		</section>
@@ -84,5 +67,48 @@
 	</div>
 
 </body>
+
+<script>
+	$(document).ready(function(){
+		$("#postCreateBtn").on("click",function(){
+			var postContentInput = $("#postContentInput").val();
+			
+			if(postContentInput == ""){
+				alert("내용을 입력하세요.");
+				return;
+			}
+			
+			var formData = new FormData();
+			formData.append("content", postContentInput);
+			formData.append("file",$("#fileInput")[0].files[0]);
+			
+			$.ajax({
+				type: "post",
+				url: "/post/create",
+				data: formData,
+				
+				//파일 업로드 필수 설정
+				enctype:"multipart/form-data",
+				processData:false,
+				contentType:false,
+				
+				success: function(data){
+					if(data.result == "success"){
+						alert("글이 성공적으로 등록 되었습니다.");
+						location.href="/post/timeline_view";
+					} else {
+						alert("글이 등록 되지 않았습니다.");
+					}
+				},
+				error: function(){
+					alert("error");
+				}
+			
+			});
+		})
+	});
+
+</script>
+
 
 </html>

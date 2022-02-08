@@ -58,9 +58,18 @@ section {
 	min-height: 100px; 
 }
 
-.post > .postHeader > .postOwner {
+.post > .postHeader {
 	font-size: 18px;
 	font-weight: bold;
+}
+
+.post > .postHeader > .postDate {
+	font-size: 15px;
+	font-weight: lighter;
+}
+
+.postDelBtn {
+	width: 15px;
 }
 
 .post > .postImg > img {
