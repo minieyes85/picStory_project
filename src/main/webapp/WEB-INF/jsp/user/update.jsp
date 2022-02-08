@@ -100,7 +100,7 @@
 				success:function(data){
 					if(data.result == "success"){
 						alert("회원정보가 성공적으로 변경 되었습니다.");
-						location.href = "/user/test_view"
+						location.href = "/post/timeline_view"
 					} else {
 						alert("회원정보 수정 실패");
 					}

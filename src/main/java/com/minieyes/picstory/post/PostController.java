@@ -12,4 +12,9 @@ public class PostController {
 	public String postTimeLine() {
 		return "post/timeLine";
 	}
+	
+	@GetMapping("/create_view")
+	public String postCreate() {
+		return "post/create";
+	}
 }
