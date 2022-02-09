@@ -29,7 +29,7 @@ public class PostController {
 			HttpServletRequest req) {
 		
 		List<Post> posts = new ArrayList<>();
-		posts = postBO.viewTimeLine();
+		posts = postBO.findAllPosts();
 		
 		HttpSession session = req.getSession();
 		
@@ -42,6 +42,18 @@ public class PostController {
 	@GetMapping("/create_view")
 	public String postCreate() {
 		return "post/create";
+	}
+	
+	@GetMapping("/update_view")
+	public String postUpdate(
+			@RequestParam("id") int id,
+			Model model) {
+		
+		Post post = postBO.findPost(id);
+		
+		model.addAttribute("post", post);
+		
+		return "post/update";
 	}
 	
 	@GetMapping("/delete")

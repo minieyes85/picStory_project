@@ -20,6 +20,10 @@ public interface PostDAO {
 	
 	public Post selectTargetPost(@Param("id") int id);
 	
+	public int updatePost(
+			@Param("id") int id,
+			@Param("content") String content);
+	
 	public int deletePost(@Param("id") int id);
 	
 }

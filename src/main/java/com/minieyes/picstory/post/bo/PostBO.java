@@ -27,8 +27,16 @@ public class PostBO {
 		return postDAO.insertPost(userId, userName, content, imagePath);
 	}
 	
-	public List<Post> viewTimeLine() {
+	public List<Post> findAllPosts() {
 		return postDAO.selectPost();
+	}
+	
+	public Post findPost(int id) {
+		return postDAO.selectTargetPost(id);
+	}
+	
+	public int updatePost(int id, String content) {
+		return postDAO.updatePost(id, content);
 	}
 	
 	public int deletePost(int id) {

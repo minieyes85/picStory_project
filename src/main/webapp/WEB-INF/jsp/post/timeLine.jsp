@@ -44,7 +44,7 @@
 								${post.userName }
 								<!-- 글 편집 버튼 -->
 								<c:if test="${userId eq post.userId}">
-									<a href="/post/modify?id=${post.id}" class="ml-1">
+									<a href="/post/update_view?id=${post.id}" class="ml-1">
 										<img src="/static/images/editBtn.png" class="postEditBtn">
 									</a>
 								</c:if>
