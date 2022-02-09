@@ -1,7 +1,7 @@
 package com.minieyes.picstory.post;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.minieyes.picstory.comment.model.Comment;
 import com.minieyes.picstory.post.bo.PostBO;
 import com.minieyes.picstory.post.model.Post;
 
@@ -22,22 +23,26 @@ public class PostController {
 
 	@Autowired
 	private PostBO postBO;
-	
+		
 	@GetMapping("/timeline_view")
-	public String postTimeLine(
+	public String postTimeLine1(
 			Model model,
 			HttpServletRequest req) {
 		
-		List<Post> posts = new ArrayList<>();
-		posts = postBO.findAllPosts();
-		
 		HttpSession session = req.getSession();
 		
+		List<Post> posts = postBO.findAllPosts();
+		Map<String, List<Comment>> allComments = postBO.findComments();
+				
+		model.addAttribute("userId", session.getAttribute("userId"));		
 		model.addAttribute("Posts", posts);
-		model.addAttribute("userId", session.getAttribute("userId"));
+		model.addAttribute("allComments", allComments);
+		
 		
 		return "post/timeLine";
 	}
+	
+	
 	
 	@GetMapping("/create_view")
 	public String postCreate() {

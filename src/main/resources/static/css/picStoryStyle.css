@@ -91,6 +91,11 @@ section {
 	max-width: 300px;
 }
 
+.post > .postComment > .comment {
+	font-size: 13px;
+	height: 20px;
+}
+
 .post > .postComment > .postCommentInput > .postCommentInputForm {
 	width: 85%;
 	margin-right: 10px;

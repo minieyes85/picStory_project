@@ -86,21 +86,45 @@
 						
 						<!-- 댓글 -->
 						
-						<div class="postComment m-2">
-							<hr>
+						<div class="postComment ml-2 mr-2 mb-2" id="post${post.id}">
+							<div class="border-top"></div>
 							
-							<!-- 댓글 리스트 추후 구현
-							<div class="mb-1">최준선 : 11111111</div>
-							<div class="mb-1">최준선 : 222222222</div>
-							<div class="mb-1">최준선 : 3333333333</div>
-							-->
+							<!-- 댓글 리스트 -->
+							
+							<c:forEach var="comments" items="${allComments }">
+								<c:if test="${post.id eq comments.key }">
+									<c:forEach var="comment" items="${comments.value }">
+										<div class="comment d-flex justify-content-between">
+											<div>
+												<span class="font-weight-bold">
+													${comment.userName }
+												</span>
+												${comment.content }
+											</div>
+											<c:if test="${userId eq comment.userId }">
+												<div>
+													<a href="/post/comment/delete?id=${comment.id}"
+														class="ml-1"
+														onclick="return confirm('댓글을 삭제하시겠습니까?')">
+														<img src="/static/images/delBtn.png"
+															width="10px" class="commentDelBtn">
+													</a>
+												</div>
+											</c:if>
+										</div>
+									</c:forEach>								
+								</c:if>
+							</c:forEach>
+							<div class="border-top mb-2"></div>
 							
 							<!-- 댓글 작성 -->
 							<div class="postCommentInput d-flex">
 								<div class="postCommentInputForm">
-									<input type="text" class="form-control mr-3" />						
+									<input type="text" class="form-control mr-3"
+										id="commentInput${post.id}"/>						
 								</div>
-								<button class="btn btn-sm btn-primary" value="${post.id}">작성</button>
+								<button class="btn btn-sm btn-primary commentCreateBtn"
+									value="${post.id}">작성</button>
 							</div>
 						</div>				
 					</div>
@@ -115,5 +139,43 @@
 	</div>
 
 </body>
+
+<script>
+	
+	$(document).ready(function(){
+		
+		$(".commentCreateBtn").on("click",function(){
+			let postId = $(this).val();
+			let content = $("#commentInput"+postId).val();
+			
+			if(content == ""){
+				alert("댓글 내용을 입력하세요.");
+				return;
+			}
+			
+			$.ajax({
+				type: "post",
+				url: "/post/comment/create",
+				data: {
+					"postId": postId,
+					"content": content
+				},
+				success: function(data){
+					if(data.result == "success"){
+						alert("댓글 등록 성공");
+						//$("#post"+post.id).reload();
+					} else {
+						alert("댓글 등록 실패");
+					}
+				},
+				error: function(){
+					alert("error");
+				}
+			});
+			
+		})
+	});
+
+</script>
 
 </html>
