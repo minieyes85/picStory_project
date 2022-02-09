@@ -24,10 +24,20 @@ public class PostBO {
 		
 		String imagePath = FileManagerService.saveFile(userId, file);
 
-		return postDAO.insertPost(userId, userName, content);
+		return postDAO.insertPost(userId, userName, content, imagePath);
 	}
 	
 	public List<Post> viewTimeLine() {
 		return postDAO.selectPost();
 	}
+	
+	public int deletePost(int id) {
+		
+		Post post = postDAO.selectTargetPost(id);
+		
+		FileManagerService.removeFile(post.getImagePath());
+		
+		return postDAO.deletePost(id);
+	}
+	
 }

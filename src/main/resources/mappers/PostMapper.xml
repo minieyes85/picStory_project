@@ -12,12 +12,14 @@
 		(`userId`
 		, `userName`
 		, `content`
+		, `imagePath`
 		, `createdAt`
 		, `updatedAt`)
 		VALUES
 		(#{userId}
 		, #{userName}
 		, #{content}
+		, #{imagePath}
 		, now()
 		, now())
 	</insert>
@@ -38,6 +40,35 @@
 		ORDER BY
 			`id`
 		DESC
+		
 	</select>
+	
+	<select id="selectTargetPost"
+	resultType="com.minieyes.picstory.post.model.Post">
+	
+		SELECT
+			`id`
+			, `userId`
+			, `userName`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{id}
+					
+	</select>
+	
+	<delete id="deletePost"
+	parameterType="int">
+	
+		DELETE FROM 
+			`post`
+		WHERE
+			`id` = #{id}
+			
+	</delete>
 
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.minieyes.picstory.post.bo.PostBO;
 import com.minieyes.picstory.post.model.Post;
@@ -41,5 +42,17 @@ public class PostController {
 	@GetMapping("/create_view")
 	public String postCreate() {
 		return "post/create";
+	}
+	
+	@GetMapping("/delete")
+	public String postDelete(@RequestParam("id") int id) {
+		
+		int count = postBO.deletePost(id);
+		
+		if(count == 1) {
+			return "redirect:/post/timeline_view";
+		} else {
+			return "post/timeLine";
+		}
 	}
 }

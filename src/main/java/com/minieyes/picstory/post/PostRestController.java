@@ -23,7 +23,7 @@ public class PostRestController {
 	@PostMapping("/post/create")
 	public Map<String, String> postCreate(
 			@RequestParam("content") String content,
-			@RequestParam("file") MultipartFile file,
+			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest req) {
 		
 		HttpSession session = req.getSession();

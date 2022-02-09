@@ -71,7 +71,7 @@
 <script>
 	$(document).ready(function(){
 		$("#postCreateBtn").on("click",function(){
-			var postContentInput = $("#postContentInput").val();
+			var postContentInput = $("#postContentInput").val().trim();
 			
 			if(postContentInput == ""){
 				alert("내용을 입력하세요.");

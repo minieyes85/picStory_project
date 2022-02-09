@@ -40,13 +40,17 @@
 	width: 250px;
 }
 
+header {
+	height: 70px;
+}
+
 header > #userName {
 	font-size: 23px;
 	font-weight: bold;
 }
 
 section {
-	min-height: 84vh;
+	min-height: calc(100vh - 120px);
 	background-color: #EDEDED;
 }
 
@@ -67,6 +71,11 @@ section {
 	font-size: 15px;
 	font-weight: lighter;
 }
+
+.postEditBtn {
+	width: 25px;
+}
+
 
 .postDelBtn {
 	width: 15px;
@@ -89,4 +98,5 @@ footer {
 	position: sticky;
 	top: 100vh;
 	font-size: 15px;
+	height: 50px;
 }

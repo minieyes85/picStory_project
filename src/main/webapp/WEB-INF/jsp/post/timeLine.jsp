@@ -40,15 +40,22 @@
 				<c:forEach var="post" items="${Posts}">
 					<div class="post border">
 						<div class="postHeader d-flex justify-content-between">
-							<div class="postOwner mt-2 ml-3">
+							<div class="postOwner mt-2 ml-3 d-flex align-items-center">
 								${post.userName }
+								<!-- 글 편집 버튼 -->
+								<c:if test="${userId eq post.userId}">
+									<a href="/post/modify?id=${post.id}" class="ml-1">
+										<img src="/static/images/editBtn.png" class="postEditBtn">
+									</a>
+								</c:if>
 							</div>
 							
-							<div class="postDate mt-2 mr-3 d-flex">
+							<div class="postDate mt-2 mr-3 d-flex align-items-center">
 								<fmt:formatDate value="${post.createdAt}" pattern="yy-MM-dd HH:mm"/>
-								<!-- 글삭제 버튼 -->
+								<!-- 글 삭제 버튼 -->
 								<c:if test="${userId eq post.userId}">
-									<a href="/post/delete?id=${post.id}" class="ml-1">
+									<a href="/post/delete?id=${post.id}" class="ml-1"
+										onclick="return confirm('삭제하시겠습니까?')">
 										<img src="/static/images/delBtn.png" class="postDelBtn">
 									</a>
 								</c:if>
