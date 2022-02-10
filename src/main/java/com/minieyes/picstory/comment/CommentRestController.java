@@ -40,7 +40,26 @@ public class CommentRestController {
 			result.put("result", "fail");			
 		}
 		
+		return result;		
+	}
+	
+	@PostMapping("/post/comment/update")
+	public Map<String, String> updateComment(
+			@RequestParam("id") int commentId,
+			@RequestParam("content") String content){
+		
+		int count = commentBO.updateComment(commentId, content);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");			
+		}
+		
 		return result;
 		
 	}
+	
 }

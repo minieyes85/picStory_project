@@ -20,4 +20,12 @@ public class CommentBO {
 		return commentDAO.insertComment(postId, userId, userName, content);
 		
 	}
+	
+	public int removeComment(int commentId) {
+		return commentDAO.deleteComment(commentId);
+	}
+	
+	public int updateComment(int commentId, String content) {
+		return commentDAO.updateComment(commentId, content);
+	}
 }

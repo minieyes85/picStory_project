@@ -96,13 +96,11 @@ section {
 	height: 20px;
 }
 
-.post > .postComment > .postCommentInput > .postCommentInputForm {
+.postCommentInputForm {
 	width: 85%;
 	margin-right: 10px;
 }
-.post > .postComment > .postCommentInput > button {
-	width: 70px;
-}
+
 
 footer {
 	position: sticky;

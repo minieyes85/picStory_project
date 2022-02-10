@@ -23,6 +23,8 @@
 	integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
 	crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="/static/js/timeLine.js"></script>
+
 <link rel="stylesheet" href="/static/css/picStoryStyle.css" type="text/css">
 
 <title>PicStory</title>
@@ -71,13 +73,21 @@
 								</div>
 							</c:when>
 						</c:choose>
-						<!-- 좋아요 기능 추후 구현
+						
+						<!-- 좋아요 -->
 						<div class="postLike mt-2 ml-2">
+							
+							<a href="/post/like/create?id=${post.id }">
 							<img src="/static/images/heart_empty.png"/>
+							</a>
+
+
+							<!-- 
+							<img src="/static/images/heart_fill.png"/>
+							 --> 
+							 
 							<span class="ml-1">좋아요</span>
 						</div>
-						
-						 -->
 						 
 						<!-- 내용 -->
 						<div class="postContent m-2">
@@ -94,33 +104,48 @@
 							<c:forEach var="comments" items="${allComments }">
 								<c:if test="${post.id eq comments.key }">
 									<c:forEach var="comment" items="${comments.value }">
-										<div class="comment d-flex justify-content-between">
-											<div>
-												<span class="font-weight-bold">
-													${comment.userName }
-												</span>
-												${comment.content }
-											</div>
-											<c:if test="${userId eq comment.userId }">
+										<div id="commentDiv${comment.id}" class="comment">
+											<div class="d-flex justify-content-between">
 												<div>
-													<a href="/post/comment/delete?id=${comment.id}"
-														class="ml-1"
-														onclick="return confirm('댓글을 삭제하시겠습니까?')">
-														<img src="/static/images/delBtn.png"
-															width="10px" class="commentDelBtn">
-													</a>
+													<span class="font-weight-bold">
+														${comment.userName }
+													</span>
+													<span id="comment${comment.id}Content">${comment.content}</span>
 												</div>
-											</c:if>
+												<c:if test="${userId eq comment.userId }">
+													<div>
+														<a at="${comment.id}"
+															class="reCommentBtn ml-1">
+															<img src="/static/images/editBtn.png"
+																width="15px" class="commentDelBtn">
+														</a>
+														<a at="${comment.id}"
+															class="commentDeleteBtn ml-2">
+															<img src="/static/images/delBtn.png"
+																width="10px" class="commentDelBtn">
+														</a>
+													</div>
+													
+												</c:if>
+											</div>
 										</div>
-									</c:forEach>								
+										<div id="updateComment${comment.id }" class="mb-2" hidden>
+											<div class="d-flex justify-content-between">
+												<div class="postCommentInputForm">
+													<input id="updateCommentInput${comment.id }" class="form-control form-control-sm mr-3" type="text" />
+												</div>
+												<button at="${comment.id}" class="commentUpdateBtn btn btn-sm btn-primary">수정</button>
+											</div>
+										</div>
+										</c:forEach>								
 								</c:if>
 							</c:forEach>
 							<div class="border-top mb-2"></div>
 							
 							<!-- 댓글 작성 -->
-							<div class="postCommentInput d-flex">
+							<div class="postCommentInput d-flex justify-content-between">
 								<div class="postCommentInputForm">
-									<input type="text" class="form-control mr-3"
+									<input type="text" class="form-control form-control-sm mr-3"
 										id="commentInput${post.id}"/>						
 								</div>
 								<button class="btn btn-sm btn-primary commentCreateBtn"
@@ -139,43 +164,5 @@
 	</div>
 
 </body>
-
-<script>
-	
-	$(document).ready(function(){
-		
-		$(".commentCreateBtn").on("click",function(){
-			let postId = $(this).val();
-			let content = $("#commentInput"+postId).val();
-			
-			if(content == ""){
-				alert("댓글 내용을 입력하세요.");
-				return;
-			}
-			
-			$.ajax({
-				type: "post",
-				url: "/post/comment/create",
-				data: {
-					"postId": postId,
-					"content": content
-				},
-				success: function(data){
-					if(data.result == "success"){
-						alert("댓글 등록 성공");
-						//$("#post"+post.id).reload();
-					} else {
-						alert("댓글 등록 실패");
-					}
-				},
-				error: function(){
-					alert("error");
-				}
-			});
-			
-		})
-	});
-
-</script>
 
 </html>
