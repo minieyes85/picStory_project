@@ -77,8 +77,8 @@
 						<!-- 좋아요 -->
 						<div class="postLike mt-2 ml-2">
 							
-							<a href="/post/like/create?id=${post.id }">
-							<img src="/static/images/heart_empty.png"/>
+							<a class="createLike" at="${post.id }">
+								<img src="/static/images/heart_empty.png"/>
 							</a>
 
 

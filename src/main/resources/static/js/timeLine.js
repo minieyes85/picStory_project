@@ -96,6 +96,28 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$(".createLike").on("click", function(){
+		var id = $(this).attr("at");
+		
+		$.ajax({
+			type: "get",
+			url: "/post/like/create",
+			data: {
+				"post": id
+			},
+			success: function(data){
+				if(data.result == "success"){
+					location.reload();
+				} else {
+					alert("좋아요가 등록되지 않았습니다.");
+				}
+			},
+			error: function(){
+				alert("error");
+			}
+		});
+	});
 
 
 

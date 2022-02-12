@@ -1,5 +1,6 @@
 package com.minieyes.picstory.like;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,10 @@ public class LikeController {
 			@RequestParam("id") int postId,
 			HttpServletRequest req){
 		
-		return;
+		Map<String, String> result = new HashMap<>();
+		
+		
+		return result;
 		
 	}
 }
