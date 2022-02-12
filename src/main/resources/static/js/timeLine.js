@@ -104,7 +104,7 @@ $(document).ready(function() {
 			type: "get",
 			url: "/post/like/create",
 			data: {
-				"post": id
+				"postId": id
 			},
 			success: function(data){
 				if(data.result == "success"){

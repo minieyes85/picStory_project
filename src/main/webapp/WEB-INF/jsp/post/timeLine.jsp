@@ -77,6 +77,8 @@
 						<!-- 좋아요 -->
 						<div class="postLike mt-2 ml-2">
 							
+							<!-- userId if 좋아요 하트 채울지 말지 -->
+							
 							<a class="createLike" at="${post.id }">
 								<img src="/static/images/heart_empty.png"/>
 							</a>
