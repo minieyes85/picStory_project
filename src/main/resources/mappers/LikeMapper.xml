@@ -25,7 +25,7 @@
 		SELECT
 			`postId`
 			, count(*) AS 'count'
-			, IF(`userId` = #{userId},1,0) AS 'check'
+			, MAX(IF(`userId` = #{userId},1,0)) AS 'check'
 		FROM `like`
 		GROUP BY `postId`;
 	
