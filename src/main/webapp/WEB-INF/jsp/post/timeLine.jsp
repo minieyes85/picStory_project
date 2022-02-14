@@ -97,10 +97,6 @@
 							</a>
 							</c:if>
 							
-							<!-- 
-							<img src="/static/images/heart_fill.png"/>
-							 -->
-							
 							<span>좋아요</span> 
 							${likes.count }
 						

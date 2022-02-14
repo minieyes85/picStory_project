@@ -15,5 +15,9 @@ public interface LikeDAO {
 	
 	public List<Map<String, Integer>> selectLike(@Param("userId") int userId);
 	
+	public int deleteLike(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
+	
 	
 }

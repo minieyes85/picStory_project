@@ -118,6 +118,28 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$(".deleteLike").on("click", function(){
+		var postId = $(this).attr("at");
+		
+		$.ajax({
+			type:"get",
+			url: "/post/like/delete",
+			data: {
+				"postId": postId,
+			},
+			success: function(data){
+				if(data.result == "success"){
+					location.reload();
+				} else {
+					alert("좋아요가 삭제되지 않았습니다.");
+				}
+			},
+			error: function(){
+				alert("error");
+			}
+		});
+	});
 
 
 
