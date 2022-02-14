@@ -75,21 +75,46 @@
 						</c:choose>
 						
 						<!-- 좋아요 -->
+						
 						<div class="postLike mt-2 ml-2">
 							
+							<c:set var="includeLike" value="1"></c:set>
+							<c:forEach var="likes" items="${allLikes }">
+	
+							<c:if test="${post.id eq likes.postId }">
+							<c:set var="includeLike" value="0"></c:set>
 							<!-- userId if 좋아요 하트 채울지 말지 -->
 							
-							<a class="createLike" at="${post.id }">
-								<img src="/static/images/heart_empty.png"/>
+							<c:if test="${likes.check eq 1 }">
+							<a class="deleteLike" at="${post.id }">
+								<img src="/static/images/heart_fill.png"/>								
 							</a>
-
-
+							</c:if>
+							
+							<c:if test="${likes.check eq 0 }">
+							<a class="createLike" at="${post.id }">
+								<img src="/static/images/heart_empty.png"/>								
+							</a>
+							</c:if>
+							
 							<!-- 
 							<img src="/static/images/heart_fill.png"/>
-							 --> 
-							 
-							<span class="ml-1">좋아요</span>
+							 -->
+							
+							<span>좋아요</span> 
+							${likes.count }
+						
+							</c:if>
+							</c:forEach>
+							
+							<c:if test="${includeLike eq 1 }">
+							<a class="createLike" at="${post.id }">
+								<img src="/static/images/heart_empty.png"/>								
+							</a>
+							<span>좋아요</span> 
+							</c:if>
 						</div>
+						
 						 
 						<!-- 내용 -->
 						<div class="postContent m-2">

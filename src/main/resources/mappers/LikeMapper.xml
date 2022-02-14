@@ -10,18 +10,25 @@
 		INSERT INTO `like`
 			(`postId`
 			, `userId`
-			, `userName`
-			, `content`
-			, `createdAt`
-			, `updatedAt`)
+			, `createdAt`)
 		VALUES
 			(#{postId}
 			, #{userId}
-			, #{userName}
-			, #{content}
-			, now()
 			, now())
 	
 	</insert>
+	
+	<select id="selectLike" 
+		parameterType="int"
+		resultType="map">
+	
+		SELECT
+			`postId`
+			, count(*) AS 'count'
+			, IF(`userId` = #{userId},1,0) AS 'check'
+		FROM `like`
+		GROUP BY `postId`;
+	
+	</select>
 
 </mapper>
