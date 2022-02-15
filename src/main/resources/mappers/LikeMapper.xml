@@ -19,15 +19,17 @@
 	</insert>
 	
 	<select id="selectLike" 
-		parameterType="int"
-		resultType="map">
+		parameterType="map"
+		resultType="com.minieyes.picstory.like.model.LikeDTO">
 	
 		SELECT
 			`postId`
 			, count(*) AS 'count'
 			, MAX(IF(`userId` = #{userId},1,0)) AS 'check'
 		FROM `like`
-		GROUP BY `postId`;
+		GROUP BY `postId`
+		HAVING
+			`postId` = #{postId}
 	
 	</select>
 	

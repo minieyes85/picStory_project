@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.minieyes.picstory.comment.model.Comment;
-import com.minieyes.picstory.like.BO.LikeBO;
 import com.minieyes.picstory.post.bo.PostBO;
 import com.minieyes.picstory.post.model.Post;
 import com.minieyes.picstory.post.model.PostDetail;
@@ -26,32 +25,7 @@ public class PostController {
 	@Autowired
 	private PostBO postBO;
 	
-	@Autowired
-	private LikeBO likeBO;
-		
-	@GetMapping("/timeline_view")
-	public String postTimeLine(
-			Model model,
-			HttpServletRequest req) {
-		
-		HttpSession session = req.getSession();
-		
-		int userId = (int) session.getAttribute("userId");
-		
-		List<Post> posts = postBO.findAllPosts();
-		Map<String, List<Comment>> allComments = postBO.findComments();
-		List<Map<String, Integer>> likes = likeBO.selectLike(userId);
-				
-		model.addAttribute("userId", session.getAttribute("userId"));		
-		model.addAttribute("Posts", posts);
-		model.addAttribute("allComments", allComments);
-		model.addAttribute("allLikes", likes);
-		
-		
-		return "post/timeLine";
-	}
-	
-	@GetMapping("timeline_view_test")
+	@GetMapping("timeline_view")
 	public String postTimeLine1(
 				Model model,
 				HttpServletRequest req) {
@@ -60,16 +34,14 @@ public class PostController {
 		
 		int userId = (int) session.getAttribute("userId");
 		
-		List<PostDetail> post = postBO.getPostList();
+		List<PostDetail> post = postBO.getPostList(userId);
 		
 		model.addAttribute("userId", userId);
 		model.addAttribute("post", post);
 		
-		return "post/timeLine1";
+		return "post/timeLine";
 	}
-	
-	
-	
+
 	@GetMapping("/create_view")
 	public String postCreate() {
 		return "post/create";

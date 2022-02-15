@@ -1,10 +1,9 @@
 package com.minieyes.picstory.like.DAO;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.minieyes.picstory.like.model.LikeDTO;
 
 @Repository
 public interface LikeDAO {
@@ -13,7 +12,9 @@ public interface LikeDAO {
 			@Param("postId") int postId,
 			@Param("userId") int userId);
 	
-	public List<Map<String, Integer>> selectLike(@Param("userId") int userId);
+	public LikeDTO selectLike(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
 	
 	public int deleteLike(
 			@Param("postId") int postId,

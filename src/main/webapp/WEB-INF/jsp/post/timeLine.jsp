@@ -39,24 +39,24 @@
 			<div>
 			
 			<div>
-				<c:forEach var="post" items="${Posts}">
+				<c:forEach var="postDetail" items="${post}">
 					<div class="post border">
 						<div class="postHeader d-flex justify-content-between">
 							<div class="postOwner mt-2 ml-3 d-flex align-items-center">
-								${post.userName }
+								${postDetail.post.userName }
 								<!-- 글 편집 버튼 -->
-								<c:if test="${userId eq post.userId}">
-									<a href="/post/update_view?id=${post.id}" class="ml-1">
+								<c:if test="${userId eq postDetail.post.userId}">
+									<a href="/post/update_view?id=${postDetail.post.id}" class="ml-1">
 										<img src="/static/images/editBtn.png" class="postEditBtn">
 									</a>
 								</c:if>
 							</div>
 							
 							<div class="postDate mt-2 mr-3 d-flex align-items-center">
-								<fmt:formatDate value="${post.createdAt}" pattern="yy-MM-dd HH:mm"/>
+								<fmt:formatDate value="${postDetail.post.createdAt}" pattern="yy-MM-dd HH:mm"/>
 								<!-- 글 삭제 버튼 -->
-								<c:if test="${userId eq post.userId}">
-									<a href="/post/delete?id=${post.id}" class="ml-1"
+								<c:if test="${userId eq postDetail.post.userId}">
+									<a href="/post/delete?id=${postDetail.post.id}" class="ml-1"
 										onclick="return confirm('삭제하시겠습니까?')">
 										<img src="/static/images/delBtn.png" class="postDelBtn">
 									</a>
@@ -66,10 +66,10 @@
 						
 						<!-- 이미지 이미지 유무에 따라 표시 if -->
 						<c:choose>
-							<c:when test="${post.imagePath eq null}"></c:when>
-							<c:when test="${post.imagePath ne null}">
+							<c:when test="${postDetail.post.imagePath eq null}"></c:when>
+							<c:when test="${postDetail.post.imagePath ne null}">
 								<div class="postImg mt-2 d-flex justify-content-center">
-									<img src="${post.imagePath}" />
+									<img src="${postDetail.post.imagePath}" />
 								</div>
 							</c:when>
 						</c:choose>
@@ -77,34 +77,27 @@
 						<!-- 좋아요 -->
 						
 						<div class="postLike mt-2 ml-2">
-							
-							<c:set var="includeLike" value="1"></c:set>
-							<c:forEach var="likes" items="${allLikes }">
 	
-							<c:if test="${post.id eq likes.postId }">
-							<c:set var="includeLike" value="0"></c:set>
 							<!-- userId if 좋아요 하트 채울지 말지 -->
 							
-							<c:if test="${likes.check eq 1 }">
-							<a class="deleteLike" at="${post.id }">
+							<c:if test="${postDetail.like.check eq 1 }">
+							<a class="deleteLike" at="${postDetail.post.id }">
 								<img src="/static/images/heart_fill.png"/>								
 							</a>
+							<span>좋아요</span> 
+							${postDetail.like.count }
 							</c:if>
 							
-							<c:if test="${likes.check eq 0 }">
-							<a class="createLike" at="${post.id }">
+							<c:if test="${postDetail.like.check eq 0 }">
+							<a class="createLike" at="${postDetail.post.id }">
 								<img src="/static/images/heart_empty.png"/>								
 							</a>
-							</c:if>
-							
 							<span>좋아요</span> 
-							${likes.count }
-						
+							${postDetail.like.count }
 							</c:if>
-							</c:forEach>
-							
-							<c:if test="${includeLike eq 1 }">
-							<a class="createLike" at="${post.id }">
+						
+							<c:if test="${postDetail.like eq null }">
+							<a class="createLike" at="${postDetail.post.id }">
 								<img src="/static/images/heart_empty.png"/>								
 							</a>
 							<span>좋아요</span> 
@@ -114,65 +107,60 @@
 						 
 						<!-- 내용 -->
 						<div class="postContent m-2">
-							${post.content }
+							${postDetail.post.content }
 						</div>					
 						
 						<!-- 댓글 -->
 						
-						<div class="postComment ml-2 mr-2 mb-2" id="post${post.id}">
+						<div class="postComment ml-2 mr-2 mb-2" id="post${postDetail.post.id}">
 							<div class="border-top"></div>
 							
 							<!-- 댓글 리스트 -->
-							
-							<c:forEach var="comments" items="${allComments }">
-								<c:if test="${post.id eq comments.key }">
-									<c:forEach var="comment" items="${comments.value }">
-										<div id="commentDiv${comment.id}" class="comment">
-											<div class="d-flex justify-content-between">
+
+								<c:forEach var="comment" items="${postDetail.commentList }">
+
+									<div id="commentDiv${comment.id}" class="comment">
+										<div class="d-flex justify-content-between">
+											<div>
+												<span class="font-weight-bold"> ${comment.userName }
+												</span> <span id="comment${comment.id}Content">${comment.content}</span>
+											</div>
+											<c:if test="${userId eq comment.userId }">
 												<div>
-													<span class="font-weight-bold">
-														${comment.userName }
-													</span>
-													<span id="comment${comment.id}Content">${comment.content}</span>
+													<a at="${comment.id}" class="reCommentBtn ml-1"> <img
+														src="/static/images/editBtn.png" width="15px"
+														class="commentDelBtn">
+													</a> <a at="${comment.id}" class="commentDeleteBtn ml-2"> <img
+														src="/static/images/delBtn.png" width="10px"
+														class="commentDelBtn">
+													</a>
 												</div>
-												<c:if test="${userId eq comment.userId }">
-													<div>
-														<a at="${comment.id}"
-															class="reCommentBtn ml-1">
-															<img src="/static/images/editBtn.png"
-																width="15px" class="commentDelBtn">
-														</a>
-														<a at="${comment.id}"
-															class="commentDeleteBtn ml-2">
-															<img src="/static/images/delBtn.png"
-																width="10px" class="commentDelBtn">
-														</a>
-													</div>
-													
-												</c:if>
-											</div>
+
+											</c:if>
 										</div>
-										<div id="updateComment${comment.id }" class="mb-2" hidden>
-											<div class="d-flex justify-content-between">
-												<div class="postCommentInputForm">
-													<input id="updateCommentInput${comment.id }" class="form-control form-control-sm mr-3" type="text" />
-												</div>
-												<button at="${comment.id}" class="commentUpdateBtn btn btn-sm btn-primary">수정</button>
+									</div>
+									<div id="updateComment${comment.id }" class="mb-2" hidden>
+										<div class="d-flex justify-content-between">
+											<div class="postCommentInputForm">
+												<input id="updateCommentInput${comment.id }"
+													class="form-control form-control-sm mr-3" type="text" />
 											</div>
+											<button at="${comment.id}"
+												class="commentUpdateBtn btn btn-sm btn-primary">수정</button>
 										</div>
-										</c:forEach>								
-								</c:if>
-							</c:forEach>
-							<div class="border-top mb-2"></div>
+									</div>
+								</c:forEach>
+
+								<div class="border-top mb-2"></div>
 							
 							<!-- 댓글 작성 -->
 							<div class="postCommentInput d-flex justify-content-between">
 								<div class="postCommentInputForm">
 									<input type="text" class="form-control form-control-sm mr-3"
-										id="commentInput${post.id}"/>						
+										id="commentInput${postDetail.post.id}"/>						
 								</div>
 								<button class="btn btn-sm btn-primary commentCreateBtn"
-									value="${post.id}">작성</button>
+									value="${postDetail.post.id}">작성</button>
 							</div>
 						</div>				
 					</div>
