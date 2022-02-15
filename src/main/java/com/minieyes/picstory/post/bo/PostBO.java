@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.minieyes.picstory.comment.dao.CommentDAO;
+import com.minieyes.picstory.comment.bo.CommentBO;
 import com.minieyes.picstory.comment.model.Comment;
 import com.minieyes.picstory.common.FileManagerService;
 import com.minieyes.picstory.post.dao.PostDAO;
 import com.minieyes.picstory.post.model.Post;
+import com.minieyes.picstory.post.model.PostDetail;
 
 @Service
 public class PostBO {
@@ -22,7 +23,7 @@ public class PostBO {
 	private PostDAO postDAO;
 	
 	@Autowired
-	private CommentDAO commentDAO;
+	private CommentBO commentBO;
 	
 	public int createPost(
 			int userId,
@@ -36,7 +37,33 @@ public class PostBO {
 	}
 	
 	public List<Post> findAllPosts() {
+		
 		return postDAO.selectPost();
+	}
+	
+	public List<PostDetail> getPostList() {
+		// post list 가져오기
+		// post 대응하는 댓글 좋아요 가져오기
+		// post 대응하는 댓글 좋아요 데이터 구조 만들기
+		
+		List<Post> postList = postDAO.selectPost();
+		
+		List<PostDetail> postDetailList = new ArrayList<>();
+		
+		// 해당하는 post id로 댓글 가져오기
+		for(Post post:postList) {
+			int postId = post.getId();
+			List<Comment> commentList = commentBO.getCommentList(postId);
+			
+			PostDetail postDetail = new PostDetail();
+			
+			postDetail.setPost(post);
+			postDetail.setCommentList(commentList);;
+			
+			postDetailList.add(postDetail);
+		}
+		
+		return postDetailList;
 	}
 	
 	public Map<String, List<Comment>> findComments(){
@@ -49,7 +76,7 @@ public class PostBO {
 		for(Post post:posts) {
 			int postId = post.getId();
 			List<Comment> comments = new ArrayList<>();
-			comments = commentDAO.selectComment(postId);
+			comments = commentBO.getCommentList(postId);
 			result.put(String.valueOf(postId), comments);
 		}
 		

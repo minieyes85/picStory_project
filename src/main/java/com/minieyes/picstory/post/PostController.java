@@ -17,6 +17,7 @@ import com.minieyes.picstory.comment.model.Comment;
 import com.minieyes.picstory.like.BO.LikeBO;
 import com.minieyes.picstory.post.bo.PostBO;
 import com.minieyes.picstory.post.model.Post;
+import com.minieyes.picstory.post.model.PostDetail;
 
 @Controller
 @RequestMapping("/post")
@@ -29,7 +30,7 @@ public class PostController {
 	private LikeBO likeBO;
 		
 	@GetMapping("/timeline_view")
-	public String postTimeLine1(
+	public String postTimeLine(
 			Model model,
 			HttpServletRequest req) {
 		
@@ -48,6 +49,23 @@ public class PostController {
 		
 		
 		return "post/timeLine";
+	}
+	
+	@GetMapping("timeline_view_test")
+	public String postTimeLine1(
+				Model model,
+				HttpServletRequest req) {
+		
+		HttpSession session = req.getSession();
+		
+		int userId = (int) session.getAttribute("userId");
+		
+		List<PostDetail> post = postBO.getPostList();
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("post", post);
+		
+		return "post/timeLine1";
 	}
 	
 	
