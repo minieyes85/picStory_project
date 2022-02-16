@@ -23,6 +23,8 @@
 	integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
 	crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
 <script type="text/javascript" src="/static/js/timeLine.js"></script>
 
 <link rel="stylesheet" href="/static/css/picStoryStyle.css" type="text/css">
@@ -44,23 +46,44 @@
 						<div class="postHeader d-flex justify-content-between">
 							<div class="postOwner mt-2 ml-3 d-flex align-items-center">
 								${postDetail.post.userName }
-								<!-- 글 편집 버튼 -->
-								<c:if test="${userId eq postDetail.post.userId}">
-									<a href="/post/update_view?id=${postDetail.post.id}" class="ml-1">
-										<img src="/static/images/editBtn.png" class="postEditBtn">
-									</a>
-								</c:if>
 							</div>
 							
 							<div class="postDate mt-2 mr-3 d-flex align-items-center">
 								<fmt:formatDate value="${postDetail.post.createdAt}" pattern="yy-MM-dd HH:mm"/>
-								<!-- 글 삭제 버튼 -->
-								<c:if test="${userId eq postDetail.post.userId}">
-									<a href="/post/delete?id=${postDetail.post.id}" class="ml-1"
-										onclick="return confirm('삭제하시겠습니까?')">
-										<img src="/static/images/delBtn.png" class="postDelBtn">
+							
+							<!-- modal launch button -->
+							
+							<c:if test="${userId eq postDetail.post.userId}">
+								<div>
+									<a href="#" class="text-dark" data-toggle="modal" data-target="#exampleModalCenter">
+										<i class="bi bi-three-dots-vertical"></i>
 									</a>
-								</c:if>
+								</div>
+							</c:if>
+							
+							<!-- Modal -->
+							<div class="modal fade bd-example-modal-sm" id="exampleModalCenter" tabindex="-1"
+								role="dialog" aria-labelledby="exampleModalCenterTitle"
+								aria-hidden="true">
+								<div class="modal-dialog modal-sm modal-dialog-centered"
+									role="document">
+									<div class="modal-content">
+									<div class="modal-body text-center">
+										<a href="/post/update_view?id=${postDetail.post.id}" class="text-decoration-none text-primary"
+										data-post-id="${postDetail.post.id}">편집하기</a>
+									</div>
+									<div class="modal-body text-center">
+										<a href="/post/delete?id=${postDetail.post.id}"
+										onclick="return confirm('삭제하시겠습니까?')"
+										class="text-decoration-none text-danger"
+										data-post-id="${postDetail.post.id}">삭제하기</a>
+									</div>
+										
+									</div>
+								</div>
+							</div>
+
+
 							</div>
 						</div>
 						
@@ -130,7 +153,8 @@
 													<a at="${comment.id}" class="reCommentBtn ml-1"> <img
 														src="/static/images/editBtn.png" width="15px"
 														class="commentDelBtn">
-													</a> <a at="${comment.id}" class="commentDeleteBtn ml-2"> <img
+													</a>
+													<a at="${comment.id}" class="commentDeleteBtn ml-2"> <img
 														src="/static/images/delBtn.png" width="10px"
 														class="commentDelBtn">
 													</a>
@@ -173,6 +197,11 @@
 		
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
 	</div>
+
+
+	
+
+	
 
 </body>
 

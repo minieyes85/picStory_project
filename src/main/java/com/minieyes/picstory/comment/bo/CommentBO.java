@@ -32,6 +32,10 @@ public class CommentBO {
 		return commentDAO.deleteComment(commentId);
 	}
 	
+	public void removeCommentByPostId (int postId) {
+		commentDAO.deleteCommentByPostId(postId);
+	}
+	
 	public int updateComment(int commentId, String content) {
 		return commentDAO.updateComment(commentId, content);
 	}

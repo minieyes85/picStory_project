@@ -105,6 +105,12 @@ public class PostBO {
 		
 		FileManagerService.removeFile(post.getImagePath());
 		
+		// comment 삭제		
+		commentBO.removeCommentByPostId(id);		
+		
+		// like 삭제
+		likeBO.removeLikeByPostId(id);
+		
 		return postDAO.deletePost(id);
 	}
 	

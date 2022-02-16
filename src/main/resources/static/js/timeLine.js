@@ -4,7 +4,10 @@
 
 $(document).ready(function() {
 
-	$(".commentCreateBtn").on("click", function() {
+	$(".commentCreateBtn").on("click", function(e) {
+		e.preventDefault;
+		
+		
 		let postId = $(this).val();
 		let content = $("#commentInput" + postId).val();
 
