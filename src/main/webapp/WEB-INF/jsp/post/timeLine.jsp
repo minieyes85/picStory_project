@@ -49,41 +49,20 @@
 							</div>
 							
 							<div class="postDate mt-2 mr-3 d-flex align-items-center">
-								<fmt:formatDate value="${postDetail.post.createdAt}" pattern="yy-MM-dd HH:mm"/>
+							<!-- 시간표시
+								<fmt:formatDate value="${postDetail.post.updatedAt}" pattern="yy-MM-dd HH:mm"/>
+							 -->
 							
 							<!-- modal launch button -->
 							
 							<c:if test="${userId eq postDetail.post.userId}">
 								<div>
-									<a href="#" class="text-dark" data-toggle="modal" data-target="#exampleModalCenter">
+									<a href="#" class="text-dark moreBtn" data-post-id="${postDetail.post.id}" data-toggle="modal" data-target="#exampleModalCenter">
 										<i class="bi bi-three-dots-vertical"></i>
 									</a>
 								</div>
 							</c:if>
 							
-							<!-- Modal -->
-							<div class="modal fade bd-example-modal-sm" id="exampleModalCenter" tabindex="-1"
-								role="dialog" aria-labelledby="exampleModalCenterTitle"
-								aria-hidden="true">
-								<div class="modal-dialog modal-sm modal-dialog-centered"
-									role="document">
-									<div class="modal-content">
-									<div class="modal-body text-center">
-										<a href="/post/update_view?id=${postDetail.post.id}" class="text-decoration-none text-primary"
-										data-post-id="${postDetail.post.id}">편집하기</a>
-									</div>
-									<div class="modal-body text-center">
-										<a href="/post/delete?id=${postDetail.post.id}"
-										onclick="return confirm('삭제하시겠습니까?')"
-										class="text-decoration-none text-danger"
-										data-post-id="${postDetail.post.id}">삭제하기</a>
-									</div>
-										
-									</div>
-								</div>
-							</div>
-
-
 							</div>
 						</div>
 						
@@ -198,10 +177,26 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp"></c:import>
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade bd-example-modal-sm" id="exampleModalCenter"
+		tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-body text-center">
+					<a id="modifyBtn" href="#"
+						class="text-decoration-none text-primary"> 편집하기 </a>
+				</div>
+				<div class="modal-body text-center">
+					<a id="deleteBtn" href="/post/delete?id=${postDetail.post.id}"
+						onclick="return confirm('삭제하시겠습니까?')"
+						class="text-decoration-none text-danger"> 삭제하기 </a>
+				</div>
 
-	
-
-	
+			</div>
+		</div>
+	</div>
 
 </body>
 

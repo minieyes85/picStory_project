@@ -95,23 +95,26 @@ public class PostBO {
 		return postDAO.selectTargetPost(id);
 	}
 	
-	public int updatePost(int id, String content) {
-		return postDAO.updatePost(id, content);
+	public int updatePost(int postId, String content) {
+		return postDAO.updatePost(postId, content);
 	}
 	
-	public int deletePost(int id) {
+	public int deletePost(int userId, int postId) {
 		
-		Post post = postDAO.selectTargetPost(id);
+		Post post = postDAO.selectTargetPost(postId);
 		
-		FileManagerService.removeFile(post.getImagePath());
-		
-		// comment 삭제		
-		commentBO.removeCommentByPostId(id);		
-		
-		// like 삭제
-		likeBO.removeLikeByPostId(id);
-		
-		return postDAO.deletePost(id);
-	}
-	
+		if(userId != post.getUserId()) {
+			return 0;
+		} else {
+			FileManagerService.removeFile(post.getImagePath());
+			
+			// comment 삭제		
+			commentBO.removeCommentByPostId(postId);		
+			
+			// like 삭제
+			likeBO.removeLikeByPostId(postId);
+			
+			return postDAO.deletePost(postId);
+		}
+	}	
 }

@@ -143,6 +143,13 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$(".moreBtn").on("click", function(){
+		let postId = $(this).data("post-id");
+		$("#modifyBtn").attr("href","/post/update_view?id="+postId);
+		$("#deleteBtn").attr("href","/post/delete?id="+postId);
+		
+	});
 
 
 

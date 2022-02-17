@@ -48,19 +48,34 @@ public class PostController {
 	@GetMapping("/update_view")
 	public String postUpdate(
 			@RequestParam("id") int id,
+			HttpServletRequest req,
 			Model model) {
+		
+		HttpSession session = req.getSession();
+		
+		int userId = (Integer) session.getAttribute("userId");
 		
 		Post post = postBO.findPost(id);
 		
-		model.addAttribute("post", post);
+		if(userId != post.getUserId()) {
+			return "unavailable request";
+		} else {
+			model.addAttribute("post", post);
+			
+			return "post/update";	
+		}
 		
-		return "post/update";
 	}
 	
 	@GetMapping("/delete")
-	public String postDelete(@RequestParam("id") int id) {
+	public String postDelete(
+			@RequestParam("id") int postId,
+			HttpServletRequest req) {
 		
-		int count = postBO.deletePost(id);
+		HttpSession session = req.getSession(); 
+		int userId = (Integer) session.getAttribute("userId");
+		
+		int count = postBO.deletePost(userId, postId);
 		
 		if(count == 1) {
 			return "redirect:/post/timeline_view";
